@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Routes | SwiftRides - Find Your Perfect Journey</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px -3px rgba(37, 99, 235, 0.3);
+    }
+    .filter-active {
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+      color: white;
+    }
+    .route-card {
+      border-left: 4px solid #2563eb;
+    }
+    .vehicle-badge {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    .price-highlight {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+  <!-- Header with Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      </svg>
+      <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">SwiftRides</h1>
+    </div>
+    <nav class="hidden md:flex space-x-8">
+      <a href="home.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Home</a>
+      <a href="routes.php" class="text-blue-600 hover:text-blue-800 font-medium transition">Routes</a>
+      <a href="services.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Services</a>
+      <a href="aboutus.php" class="text-gray-700 hover:text-blue-600 font-medium transition">About</a>
+      <a href="contact.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <a href="login.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Login</a>
+      <a href="register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">Register</a>
+    </div>
+  </header>
+
+  <!-- Search Header -->
+  <section class="gradient-bg text-white py-8">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">Available Routes</h1>
+        <p class="text-blue-100 text-lg">Dar es Salaam → Arusha • May 24, 2025</p>
+      </div>
+      
+      <!-- Quick Search Form -->
+      <div class="bg-white/10 backdrop-blur-md rounded-xl p-6">
+        <form class="grid md:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">From</label>
+            <select class="w-full p-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-300">
+              <option selected>Dar es Salaam</option>
+              <option>Arusha</option>
+              <option>Nairobi</option>
+              <option>Kampala</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">To</label>
+            <select class="w-full p-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-300">
+              <option selected>Arusha</option>
+              <option>Dar es Salaam</option>
+              <option>Mombasa</option>
+              <option>Kigali</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Date</label>
+            <input type="date" class="w-full p-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-300" value="2025-05-24">
+          </div>
+          <button type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition self-end">
+            Update Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters and Results -->
+  <section class="max-w-6xl mx-auto px-6 py-8">
+    <div class="grid lg:grid-cols-4 gap-8">
+      
+      <!-- Filters Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-sm p-6 sticky top-24">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Filter Results</h3>
+          
+          <!-- Departure Time -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-3">Departure Time</h4>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Early Morning (05:00 - 09:00)</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500" checked>
+                <span class="ml-2 text-sm">Morning (09:00 - 12:00)</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Afternoon (12:00 - 17:00)</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Evening (17:00 - 22:00)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Price Range -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-3">Price Range (TZS)</h4>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">20,000 - 30,000</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500" checked>
+                <span class="ml-2 text-sm">30,000 - 40,000</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">40,000 - 50,000</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">50,000+</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Bus Class -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-3">Service Class</h4>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500" checked>
+                <span class="ml-2 text-sm">Economy</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500" checked>
+                <span class="ml-2 text-sm">Business</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">VIP/Luxury</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="mb-6">
+            <h4 class="font-medium text-gray-700 mb-3">Amenities</h4>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">WiFi</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Air Conditioning</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Entertainment</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm">Refreshments</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition">
+            Clear All Filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="lg:col-span-3">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h2 class="text-xl font-semibold text-gray-800">12 Routes Found</h2>
+            <p class="text-gray-600">Showing results for May 24, 2025</p>
+          </div>
+          <select class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+            <option>Sort by: Departure Time</option>
+            <option>Sort by: Price (Low to High)</option>
+            <option>Sort by: Price (High to Low)</option>
+            <option>Sort by: Duration</option>
+            <option>Sort by: Rating</option>
+          </select>
+        </div>
+
+        <!-- Route Cards -->
+        <div class="space-y-4">
+          
+          <!-- Route 1 - SwiftRides Express -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">SwiftRides Express</h3>
+                      <p class="text-sm text-gray-600">Mercedes-Benz Tourismo • Business Class</p>
+                    </div>
+                  </div>
+                  <div class="vehicle-badge text-white text-xs px-3 py-1 rounded-full">
+                    Premium
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">06:30</div>
+                    <div class="text-sm text-gray-600">Ubungo Terminal</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">8h 30m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-blue-600 rounded-full"></div>
+                      <div class="w-16 h-0.5 bg-blue-600 mx-2"></div>
+                      <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">Direct</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">15:00</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Reclining Seats</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Refreshments</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 35,000</div>
+                <div class="text-sm text-gray-600 mb-4">32 seats available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route 2 - Kilimanjaro Express -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">Kilimanjaro Express</h3>
+                      <p class="text-sm text-gray-600">Scania Irizar • Luxury VIP</p>
+                    </div>
+                  </div>
+                  <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-3 py-1 rounded-full">
+                    VIP
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">07:00</div>
+                    <div class="text-sm text-gray-600">Ubungo Terminal</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">7h 45m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-red-600 rounded-full"></div>
+                      <div class="w-16 h-0.5 bg-red-600 mx-2"></div>
+                      <div class="w-3 h-3 bg-red-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">Express</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">14:45</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Leather Seats</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Meals</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full">Entertainment</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 55,000</div>
+                <div class="text-sm text-gray-600 mb-4">18 seats available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route 3 - Safari Coach -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">Safari Coach Services</h3>
+                      <p class="text-sm text-gray-600">Volvo 9700 • Economy Plus</p>
+                    </div>
+                  </div>
+                  <div class="bg-gradient-to-r from-green-400 to-green-600 text-white text-xs px-3 py-1 rounded-full">
+                    Eco+
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">08:00</div>
+                    <div class="text-sm text-gray-600">Mbezi Luis</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">9h 15m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-green-600 rounded-full"></div>
+                      <div class="w-4 h-0.5 bg-green-600 mx-1"></div>
+                      <div class="w-2 h-2 bg-green-600 rounded-full"></div>
+                      <div class="w-4 h-0.5 bg-green-600 mx-1"></div>
+                      <div class="w-3 h-3 bg-green-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">1 Stop</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">17:15</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
+                  <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Standard Seats</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 28,000</div>
+                <div class="text-sm text-gray-600 mb-4">45 seats available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route 4 - Tanzanian Spirit -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">Tanzanian Spirit</h3>
+                      <p class="text-sm text-gray-600">MAN Lion's Coach • Business Class</p>
+                    </div>
+                  </div>
+                  <div class="bg-gradient-to-r from-purple-400 to-purple-600 text-white text-xs px-3 py-1 rounded-full">
+                    Business
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">09:30</div>
+                    <div class="text-sm text-gray-600">Kariakoo</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">8h 00m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-purple-600 rounded-full"></div>
+                      <div class="w-16 h-0.5 bg-purple-600 mx-2"></div>
+                      <div class="w-3 h-3 bg-purple-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">Direct</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">17:30</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2<span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Reclining Seats</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Snacks</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 42,000</div>
+                <div class="text-sm text-gray-600 mb-4">28 seats available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route 5 - Eastland Express -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">Eastland Express</h3>
+                      <p class="text-sm text-gray-600">Isuzu Gala • Economy</p>
+                    </div>
+                  </div>
+                  <div class="bg-gradient-to-r from-orange-400 to-orange-600 text-white text-xs px-3 py-1 rounded-full">
+                    Economy
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">10:00</div>
+                    <div class="text-sm text-gray-600">Posta</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">10h 30m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-orange-600 rounded-full"></div>
+                      <div class="w-3 h-0.5 bg-orange-600 mx-1"></div>
+                      <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                      <div class="w-3 h-0.5 bg-orange-600 mx-1"></div>
+                      <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                      <div class="w-3 h-0.5 bg-orange-600 mx-1"></div>
+                      <div class="w-3 h-3 bg-orange-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">2 Stops</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">20:30</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Standard Seats</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 25,000</div>
+                <div class="text-sm text-gray-600 mb-4">52 seats available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route 6 - Highland Cruiser -->
+          <div class="bg-white rounded-xl shadow-sm p-6 route-card card-hover">
+            <div class="flex flex-col md:flex-row md:items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-800">Highland Cruiser</h3>
+                      <p class="text-sm text-gray-600">Scania Touring • VIP Sleeper</p>
+                    </div>
+                  </div>
+                  <div class="bg-gradient-to-r from-indigo-400 to-indigo-600 text-white text-xs px-3 py-1 rounded-full">
+                    VIP Sleeper
+                  </div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <div class="text-2xl font-bold text-gray-800">11:00</div>
+                    <div class="text-sm text-gray-600">Ubungo Terminal</div>
+                    <div class="text-xs text-gray-500">Dar es Salaam</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-sm text-gray-600 mb-1">7h 30m</div>
+                    <div class="flex items-center justify-center">
+                      <div class="w-3 h-3 border-2 border-indigo-600 rounded-full"></div>
+                      <div class="w-16 h-0.5 bg-indigo-600 mx-2"></div>
+                      <div class="w-3 h-3 bg-indigo-600 rounded-full"></div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">Express</div>
+                  </div>
+                  <div class="text-right md:text-left">
+                    <div class="text-2xl font-bold text-gray-800">18:30</div>
+                    <div class="text-sm text-gray-600">Arusha Bus Station</div>
+                    <div class="text-xs text-gray-500">Arusha</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Sleeper Beds</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Gourmet Meals</span>
+                  <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full">Entertainment</span>
+                </div>
+              </div>
+              
+              <div class="md:text-right md:ml-6">
+                <div class="price-highlight text-3xl mb-2">TZS 75,000</div>
+                <div class="text-sm text-gray-600 mb-4">12 beds available</div>
+                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Seats
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium transition">
+            Load More Routes
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Routes Section -->
+  <section class="bg-white py-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Other Popular Routes</h2>
+        <p class="text-gray-600">Explore more destinations across East Africa</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-xl card-hover">
+          <h3 class="font-semibold text-gray-800 mb-2">Nairobi ↔ Mombasa</h3>
+          <p class="text-sm text-gray-600 mb-4">8 daily departures</p>
+          <div class="flex justify-between items-center">
+            <span class="text-blue-600 font-semibold">From KES 1,200</span>
+            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">View Routes →</a>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-xl card-hover">
+          <h3 class="font-semibold text-gray-800 mb-2">Kampala ↔ Kigali</h3>
+          <p class="text-sm text-gray-600 mb-4">6 daily departures</p>
+          <div class="flex justify-between items-center">
+            <span class="text-green-600 font-semibold">From UGX 45,000</span>
+            <a href="#" class="text-green-600 hover:text-green-800 font-medium">View Routes →</a>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-6 rounded-xl card-hover">
+          <h3 class="font-semibold text-gray-800 mb-2">Dodoma ↔ Mwanza</h3>
+          <p class="text-sm text-gray-600 mb-4">4 daily departures</p>
+          <div class="flex justify-between items-center">
+            <span class="text-purple-600 font-semibold">From TZS 22,000</span>
+            <a href="#" class="text-purple-600 hover:text-purple-800 font-medium">View Routes →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 px-6 py-12">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center space-x-2 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+          <h3 class="text-xl font-bold text-white">SwiftRides</h3>
+        </div>
+        <p class="mb-4">Premium transport services across East Africa with comfort and reliability.</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="home.php" class="hover:text-white transition">Home</a></li>
+          <li><a href="routes.php" class="hover:text-white transition">Routes</a></li>
+          <li><a href="services.php" class="hover:text-white transition">Services</a></li>
+          <li><a href="aboutus.php" class="hover:text-white transition">About Us</a></li>
+          <li><a href="contact.php" class="hover:text-white transition">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="text-lg font-semibold text-white mb-4">Support</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="text-lg font-semibold text-white mb-4">Contact Us</h4>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-0.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>123 Transport Ave, Dar es Salaam, Tanzania</span>
+          </li>
+          <li class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <span>+255 123 456 789</span>
+          </li>
+          <li class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span>info@swiftrides.co.tz</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="max-w-6xl mx-auto mt-12 pt-6 border-t border-gray-800 text-center">
+      <p>&copy; 2025 SwiftRides. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const sortSelect = document.querySelector('select');
+      
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', filterResults);
+      });
+      
+      sortSelect.addEventListener('change', sortResults);
+      
+      function filterResults() {
+        // Simulate filtering - in real app, this would filter the results
+        console.log('Filtering results...');
+      }
+      
+      function sortResults() {
+        // Simulate sorting - in real app, this would sort the results
+        console.log('Sorting results...');
+      }
+      
+      // Clear filters
+      const clearButton = document.querySelector('button:contains("Clear All Filters")');
+      if (clearButton) {
+        clearButton.addEventListener('click', function() {
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          filterResults();
+        });
+      }
+    });
+
+    // Animate route cards on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe route cards
+    document.querySelectorAll('.route-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
