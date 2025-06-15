@@ -205,17 +205,17 @@
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Team Member 1 -->
         <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Team Member" class="w-full h-64 object-cover">
+          <img src="images/rama.jpg" alt="Team Member" class="w-full h-64 object-cover">
           <div class="p-6">
-            <h4 class="text-xl font-bold text-gray-800 mb-1">James Mwangi</h4>
+            <h4 class="text-xl font-bold text-gray-800 mb-1">Ramadhan Hatbu</h4>
             <p class="text-blue-600 font-medium mb-4">Founder & CEO</p>
-            <p class="text-gray-600">With 15 years in transportation, James founded SwiftRides to revolutionize travel in East Africa.</p>
+            <p class="text-gray-600">With 15 years in transportation, Ramadhani founded SwiftRides to revolutionize travel in East Africa.</p>
           </div>
         </div>
         
         <!-- Team Member 2 -->
         <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Team Member" class="w-full h-64 object-cover">
+          <img src="images/rama02.jpg" alt="Team Member" class="w-full h-64 object-cover">
           <div class="p-6">
             <h4 class="text-xl font-bold text-gray-800 mb-1">Amina Hassan</h4>
             <p class="text-blue-600 font-medium mb-4">Operations Director</p>
@@ -225,7 +225,7 @@
         
         <!-- Team Member 3 -->
         <div class="bg-white rounded-xl overflow-hidden shadow-sm card-hover">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Team Member" class="w-full h-64 object-cover">
+          <img src="images/rama3.jpg" alt="Team Member" class="w-full h-64 object-cover">
           <div class="p-6">
             <h4 class="text-xl font-bold text-gray-800 mb-1">David Ochieng</h4>
             <p class="text-blue-600 font-medium mb-4">Technology Director</p>

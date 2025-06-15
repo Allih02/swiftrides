@@ -27,6 +27,18 @@
       transform: translateY(-2px);
       box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
     }
+    .transport-mode-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .transport-mode-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.15);
+    }
+    .transport-mode-card.selected {
+      border-color: #2563eb !important;
+      background-color: #eff6ff !important;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -46,10 +58,7 @@
       <a href="aboutus.php" class="text-gray-700 hover:text-blue-600 font-medium transition">About</a>
       <a href="contact.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Contact</a>
     </nav>
-    <div class="flex items-center space-x-4">
-      <a href="login.php" class="text-gray-700 hover:text-blue-600 font-medium transition">Login</a>
-      <a href="register.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-sm">Register</a>
-    </div>
+    <!-- Login/Register section removed -->
   </header>
 
   <!-- Hero Section -->
@@ -61,14 +70,13 @@
     </div>
     
     <div class="relative z-10 md:w-1/2 px-4 animate__animated animate__fadeInLeft">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Travel with Comfort & Style</h2>
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Safari Link Tanzania</h2>
       <p class="text-lg md:text-xl text-blue-100 mb-10">Experience seamless booking and premium transport services across East Africa.</p>
       
       <div class="flex space-x-4">
         <a href="#booking" class="btn-primary px-6 py-3 rounded-lg font-medium shadow-lg">Book Now</a>
         <a href="learn-more.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition shadow-sm">Learn More</a>
       </div>
-      
       <div class="mt-12 flex items-center space-x-8">
         <div class="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,27 +120,7 @@
             <option value="morogoro">Morogoro</option>
             <option value="zanzibar">Zanzibar</option>
           </optgroup>
-          <optgroup label="Kenya">
-            <option value="nairobi">Nairobi</option>
-            <option value="mombasa">Mombasa</option>
-            <option value="kisumu">Kisumu</option>
-            <option value="nakuru">Nakuru</option>
-            <option value="eldoret">Eldoret</option>
           </optgroup>
-          <optgroup label="Uganda">
-            <option value="kampala">Kampala</option>
-            <option value="entebbe">Entebbe</option>
-            <option value="jinja">Jinja</option>
-            <option value="mbale">Mbale</option>
-          </optgroup>
-          <optgroup label="Rwanda">
-            <option value="kigali">Kigali</option>
-            <option value="butare">Butare</option>
-            <option value="ruhengeri">Ruhengeri</option>
-          </optgroup>
-          <optgroup label="Burundi">
-            <option value="bujumbura">Bujumbura</option>
-            <option value="gitega">Gitega</option>
           </optgroup>
         </select>
       </div>
@@ -150,27 +138,6 @@
             <option value="morogoro">Morogoro</option>
             <option value="zanzibar">Zanzibar</option>
           </optgroup>
-          <optgroup label="Kenya">
-            <option value="nairobi">Nairobi</option>
-            <option value="mombasa">Mombasa</option>
-            <option value="kisumu">Kisumu</option>
-            <option value="nakuru">Nakuru</option>
-            <option value="eldoret">Eldoret</option>
-          </optgroup>
-          <optgroup label="Uganda">
-            <option value="kampala">Kampala</option>
-            <option value="entebbe">Entebbe</option>
-            <option value="jinja">Jinja</option>
-            <option value="mbale">Mbale</option>
-          </optgroup>
-          <optgroup label="Rwanda">
-            <option value="kigali">Kigali</option>
-            <option value="butare">Butare</option>
-            <option value="ruhengeri">Ruhengeri</option>
-          </optgroup>
-          <optgroup label="Burundi">
-            <option value="bujumbura">Bujumbura</option>
-            <option value="gitega">Gitega</option>
           </optgroup>
         </select>
       </div>
@@ -178,25 +145,99 @@
         <label for="travel_date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
         <input type="date" id="travel_date" name="travel_date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required />
       </div>
-      <button type="submit" class="btn-primary mt-6 md:mt-0 px-6 py-3 rounded-lg font-medium text-white hover:shadow-lg transition">Search Routes</button>
+      <button type="submit" id="searchButton" class="btn-primary mt-6 md:mt-0 px-6 py-3 rounded-lg font-medium text-white hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Search Routes</button>
     </form>
     
-    <!-- Station Selection (shown after city selection) -->
-    <div id="stationSelection" class="hidden mt-6 bg-gray-50 p-6 rounded-xl">
-      <div class="grid md:grid-cols-2 gap-6">
-        <div>
-          <label for="origin_station" class="block text-sm font-medium text-gray-700 mb-2">Select Departure Station</label>
-          <select id="origin_station" name="origin_station" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            <option value="" disabled selected>Select station</option>
-            <!-- Stations will be populated dynamically via JavaScript -->
-          </select>
+    <!-- Ward Selection (shown after destination city selection) -->
+    <div id="wardSelection" class="hidden mt-6 bg-gray-50 p-6 rounded-xl">
+      <div class="mb-4">
+        <h4 class="text-lg font-semibold text-gray-800 mb-2" id="wardSectionTitle">Select Ward in Selected City</h4>
+        <p class="text-sm text-gray-600" id="wardSectionDescription">Choose your specific destination ward for more accurate routing</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="wardList">
+        <!-- Wards will be populated dynamically via JavaScript -->
+      </div>
+      
+      <input type="hidden" id="selected_ward" name="selected_ward" value="">
+    </div>
+
+    <!-- Transport Mode Selection (shown after ward selection) -->
+    <div id="transportModeSelection" class="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+      <div class="mb-6">
+        <h4 class="text-lg font-semibold text-gray-800 mb-2">Choose Your Transport Mode</h4>
+        <p class="text-sm text-gray-600">Select the type of transport that best suits your journey</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6" id="transportModeList">
+        <!-- Bodaboda Option -->
+        <div class="transport-mode-card bg-white p-6 rounded-lg border-2 border-gray-200 text-center" data-mode="bodaboda">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h5 class="text-lg font-semibold text-gray-800 mb-2">Bodaboda</h5>
+          <p class="text-sm text-gray-600 mb-3">Fast motorcycle taxi - Perfect for quick trips and beating traffic</p>
+          <div class="text-orange-600 font-medium">
+            <span class="text-sm">Starting from</span>
+            <div class="text-lg">TZS 2,000</div>
+          </div>
+          <div class="mt-3 text-xs text-gray-500">
+            ⚡ Fastest • 🏍️ Motorcycle • 👤 1 Passenger
+          </div>
         </div>
-        <div>
-          <label for="destination_station" class="block text-sm font-medium text-gray-700 mb-2">Select Arrival Station</label>
-          <select id="destination_station" name="destination_station" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            <option value="" disabled selected>Select station</option>
-            <!-- Stations will be populated dynamically via JavaScript -->
-          </select>
+
+        <!-- Bajaj Option -->
+        <div class="transport-mode-card bg-white p-6 rounded-lg border-2 border-gray-200 text-center" data-mode="bajaj">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+          </div>
+          <h5 class="text-lg font-semibold text-gray-800 mb-2">Bajaj</h5>
+          <p class="text-sm text-gray-600 mb-3">3-wheeler auto-rickshaw - Comfortable and affordable for short distances</p>
+          <div class="text-green-600 font-medium">
+            <span class="text-sm">Starting from</span>
+            <div class="text-lg">TZS 3,500</div>
+          </div>
+          <div class="mt-3 text-xs text-gray-500">
+            🚗 Comfortable • 🛺 Auto-rickshaw • 👥 2-3 Passengers
+          </div>
+        </div>
+
+        <!-- Cab Option -->
+        <div class="transport-mode-card bg-white p-6 rounded-lg border-2 border-gray-200 text-center" data-mode="cab">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </div>
+          <h5 class="text-lg font-semibold text-gray-800 mb-2">Cab</h5>
+          <p class="text-sm text-gray-600 mb-3">Private car service - Premium comfort for longer journeys</p>
+          <div class="text-blue-600 font-medium">
+            <span class="text-sm">Starting from</span>
+            <div class="text-lg">TZS 8,000</div>
+          </div>
+          <div class="mt-3 text-xs text-gray-500">
+            🏆 Premium • 🚗 Private car • 👨‍👩‍👧‍👦 4+ Passengers
+          </div>
+        </div>
+      </div>
+      
+      <input type="hidden" id="selected_transport_mode" name="selected_transport_mode" value="">
+      
+      <!-- Price Estimate -->
+      <div id="priceEstimate" class="hidden mt-6 bg-white p-4 rounded-lg border border-blue-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <h6 class="font-semibold text-gray-800">Estimated Price</h6>
+            <p class="text-sm text-gray-600" id="routeInfo">Route info will appear here</p>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-bold text-blue-600" id="estimatedPrice">TZS 0</div>
+            <div class="text-xs text-gray-500">Final price may vary</div>
+          </div>
         </div>
       </div>
     </div>
@@ -253,44 +294,44 @@
       </div>
       
       <div class="grid md:grid-cols-3 gap-8">
-        <?php
-        $routes = [
-          [
-            "name" => "Dar es Salaam to Arusha",
-            "duration" => "8-10 hours",
-            "price" => "From TZS 35,000",
-            "image" => "bg-[url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')]"
-          ],
-          [
-            "name" => "Nairobi to Mombasa",
-            "duration" => "6-8 hours",
-            "price" => "From KES 1,200",
-            "image" => "bg-[url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')]"
-          ],
-          [
-            "name" => "Kampala to Kigali",
-            "duration" => "10-12 hours",
-            "price" => "From UGX 50,000",
-            "image" => "bg-[url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')]"
-          ]
-        ];
-        
-        foreach ($routes as $route) {
-          echo '
-          <div class="relative rounded-xl overflow-hidden shadow-md card-hover h-64">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-            <div class="'.$route['image'].' bg-cover bg-center absolute inset-0"></div>
-            <div class="relative z-10 h-full flex flex-col justify-end p-6">
-              <h4 class="text-xl font-bold text-white mb-1">'.$route['name'].'</h4>
-              <div class="flex justify-between text-white/90">
-                <span>'.$route['duration'].'</span>
-                <span class="font-medium">'.$route['price'].'</span>
-              </div>
-              <a href="#" class="mt-4 inline-block text-center bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">Book Now</a>
+        <div class="relative rounded-xl overflow-hidden shadow-md card-hover h-64">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="bg-[url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')] bg-cover bg-center absolute inset-0"></div>
+          <div class="relative z-10 h-full flex flex-col justify-end p-6">
+            <h4 class="text-xl font-bold text-white mb-1">Dar es Salaam to Arusha</h4>
+            <div class="flex justify-between text-white/90">
+              <span>8-10 hours</span>
+              <span class="font-medium">From TZS 35,000</span>
             </div>
-          </div>';
-        }
-        ?>
+            <a href="#" class="mt-4 inline-block text-center bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">Book Now</a>
+          </div>
+        </div>
+        
+        <div class="relative rounded-xl overflow-hidden shadow-md card-hover h-64">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="bg-[url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')] bg-cover bg-center absolute inset-0"></div>
+          <div class="relative z-10 h-full flex flex-col justify-end p-6">
+            <h4 class="text-xl font-bold text-white mb-1">Nairobi to Mombasa</h4>
+            <div class="flex justify-between text-white/90">
+              <span>6-8 hours</span>
+              <span class="font-medium">From KES 1,200</span>
+            </div>
+            <a href="#" class="mt-4 inline-block text-center bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">Book Now</a>
+          </div>
+        </div>
+        
+        <div class="relative rounded-xl overflow-hidden shadow-md card-hover h-64">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="bg-[url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')] bg-cover bg-center absolute inset-0"></div>
+          <div class="relative z-10 h-full flex flex-col justify-end p-6">
+            <h4 class="text-xl font-bold text-white mb-1">Kampala to Kigali</h4>
+            <div class="flex justify-between text-white/90">
+              <span>10-12 hours</span>
+              <span class="font-medium">From UGX 50,000</span>
+            </div>
+            <a href="#" class="mt-4 inline-block text-center bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">Book Now</a>
+          </div>
+        </div>
       </div>
       
       <div class="text-center mt-12">
@@ -427,7 +468,7 @@
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-300 px-6 py-12">
-    < class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
       <div>
         <div class="flex items-center space-x-2 mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -444,7 +485,7 @@
           </a>
           <a href="#" class="text-gray-400 hover:text-white transition">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.137.353.3.882.344 1.857.047 1.023.058 1.351.058 3.807v.468c0 2.456-.011 2.784-.058 3.807-.045.975-.207 1.504-.344 1.857a3.157 3.157 0 01-.748 1.15 3.157 3.157 0 01-1.15.748c-.353.137-.882.3-1.857.344-1.054.048-1.37.058-3.808.058h-.468c-2.456 0-2.784-.011-3.807-.058-.975-.045-1.504-.207-1.857-.344a3.157 3.157 0 01-1.15-.748 3.157 3.157 0 01-.748-1.15c-.137-.353-.3-.882-.344-1.857-.048-1.054-.058-1.37-.058-3.808v-.468c0-2.456.011-2.784.058-3.807.045-.975.207-1.504.344-1.857.182-.466.399-.8.748-1.15.35-.35.683-.566 1.15-.748.353-.137.882-.3 1.857-.344 1.023-.047 1.351-.058 3.807-.058h.468c2.456 0 2.784.011 3.807.058.975.045 1.504.207 1.857.344.466.182.8.398 1.15.748.35.35.566.683.748 1.15.137.353.3.882.344 1.857.048 1.023.058 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344a3.157 3.157 0 011.15-.748c.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.023.058-1.37.058-3.808.058h-.468c-2.456 0-2.784-.011-3.807-.058-.975-.045-1.504-.207-1.856-.344-.467-.182-.8-.398-1.15-.748a3.157 3.157 0 01-.748-1.15c-.137-.353-.3-.882-.344-1.857-.047-1.023-.058-1.351-.058-3.807v-.468c0-2.456.011-2.784.058-3.807.045-.975.207-1.504.344-1.857.182-.466.399-.8.748-1.15.35-.35.683-.566 1.15-.748.353-.137.882-.3 1.857-.344 1.054-.048 1.37-.058 3.808-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
+              <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.023.047 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344.466-.182.8-.399 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.023.058-1.351.058-3.807v-.468c0-2.456-.011-2.784-.058-3.807-.045-.975-.207-1.504-.344-1.857a3.157 3.157 0 00-.748-1.15 3.157 3.157 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058z"/>
             </svg>
           </a>
           <a href="#" class="text-gray-400 hover:text-white transition">
@@ -477,7 +518,7 @@
         </ul>
       </div>
       
-      <div></div
+      <div>
         <h4 class="text-lg font-semibold text-white mb-4">Contact Us</h4>
         <ul class="space-y-2">
           <li class="flex items-start">
@@ -504,90 +545,304 @@
     </div>
     
     <div class="max-w-6xl mx-auto mt-12 pt-6 border-t border-gray-800 text-center">
-      <p>&copy; <?php echo date('Y'); ?> SwiftRides. All rights reserved.</p>
+      <p>&copy; 2025 SwiftRides. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
-    // City and station data for East Africa
-    const cityStations = {
+    // City wards data for East Africa
+    const cityWards = {
       // Tanzania
-      dar_es_salaam: ["Ubungo Bus Terminal", "Mbezi Luis", "Kariakoo", "Posta"],
-      arusha: ["Arusha Bus Station", "Ngaramtoni", "Sakina"],
-      dodoma: ["Dodoma Main Bus Stand", "Makutopora"],
-      mbeya: ["Mbeya Bus Terminal", "Mwanjelwa"],
-      mwanza: ["Mwanza Bus Stand", "Nyakato"],
-      tanga: ["Tanga Bus Station", "Mwanzange"],
-      morogoro: ["Morogoro Bus Stand", "Mazimbu"],
-      zanzibar: ["Zanzibar Ferry Terminal", "Mwanakwerekwe"],
-      
+      dar_es_salaam: [
+        "Ilala", "Kinondoni", "Temeke", "Ubungo", "Kigamboni",
+        "Kariakoo", "Upanga", "Msimbazi", "Magomeni", "Sinza",
+        "Mikocheni", "Oysterbay", "Masaki", "Kivukoni", "Gerezani"
+      ],
+      arusha: [
+        "Arusha Central", "Kaloleni", "Kati", "Lemara", "Levolosi",
+        "Ngarenaro", "Njiro", "Sekei", "Sokon I", "Sokon II",
+        "Terrat", "Themi", "Unga Limited"
+      ],
+      dodoma: [
+        "Dodoma Urban", "Hombolo", "Kikuyu", "Makutopora", "Miyuji",
+        "Msalato", "Zuzu", "Chamwino", "Mpwapwa", "Kongwa"
+      ],
+      mbeya: [
+        "Mbeya City", "Sisimba", "Iyela", "Iziwa", "Nsalaga",
+        "Ruanda", "Itende", "Maendeleo", "Mwanjelwa", "Idunda"
+      ],
+      mwanza: [
+        "Nyamagana", "Ilemela", "Pamba", "Butimba", "Kirumba",
+        "Mahina", "Mirongo", "Pasiansi", "Igoma", "Buzuruga"
+      ],
+      tanga: [
+        "Tanga City", "Msambweni", "Makorora", "Chumbageni", "Nguvumali",
+        "Mwanzange", "Kiomoni", "Tongoni", "Mabokweni", "Mzizima"
+      ],
+      morogoro: [
+        "Morogoro Municipal", "Mazimbu", "Kihonda", "Kilakala", "Kingolwira",
+        "Mafiga", "Bigwa", "Sabasaba", "Kingo", "Kichangani"
+      ],
+      zanzibar: [
+        "Stone Town", "Ng'ambo", "Malindi", "Mkunazini", "Kiponda",
+        "Shaurimoyo", "Vikokotoni", "Kilimani", "Magogoni", "Kwahani"
+      ],
+
       // Kenya
-      nairobi: ["Nairobi River Road", "Machakos Country Bus", "Muthurwa"],
-      mombasa: ["Mombasa Bus Station", "Likoni Ferry"],
-      kisumu: ["Kisumu Bus Park", "Kondele"],
-      nakuru: ["Nakuru Bus Terminal", "Lanet"],
-      eldoret: ["Eldoret Bus Park", "Uganda Road"],
-      
+      nairobi: [
+        "Central", "Westlands", "Dagoretti North", "Dagoretti South", "Langata",
+        "Kibra", "Roysambu", "Kasarani", "Ruaraka", "Embakasi South",
+        "Embakasi North", "Embakasi Central", "Embakasi East", "Embakasi West",
+        "Makadara", "Kamukunji", "Starehe", "Mathare"
+      ],
+      mombasa: [
+        "Mvita", "Nyali", "Kisauni", "Likoni", "Changamwe", "Jomba",
+        "Tudor", "Tononoka", "Shimanzi", "Ganjoni", "Kizingo",
+        "Old Town", "Majengo", "Bamburi", "Shanzu", "Mtopanga"
+      ],
+      kisumu: [
+        "Kisumu Central", "Kisumu East", "Kisumu West", "Winam", "Seme",
+        "Nyando", "Muhoroni", "Nyakach", "Kondele", "Migosi",
+        "Mamboleo", "Dunga", "Bandani", "Kaloleni", "Manyatta"
+      ],
+      nakuru: [
+        "Nakuru East", "Nakuru West", "Bahati", "Subukia", "Rongai",
+        "Njoro", "Molo", "Gilgil", "Naivasha", "London",
+        "Milimani", "Shabab", "Kaptembwo", "Rhonda", "Flamingo"
+      ],
+      eldoret: [
+        "Soy", "Turbo", "Moiben", "Kesses", "Marakwet East", "Marakwet West",
+        "Keiyo North", "Keiyo South", "West Pokot", "Langas",
+        "Pioneer", "Huruma", "Kamukunji", "Kimumu", "Burnt Forest"
+      ],
+
       // Uganda
-      kampala: ["Kampala Bus Park", "Old Taxi Park", "New Taxi Park"],
-      entebbe: ["Entebbe Bus Station", "Airport Road"],
-      jinja: ["Jinja Main Bus Park", "Nalufenya"],
-      mbale: ["Mbale Bus Terminal", "Nkoma"],
-      
+      kampala: [
+        "Central Division", "Kawempe", "Makindye", "Nakawa", "Rubaga",
+        "Mengo", "Old Kampala", "Industrial Area", "Kololo", "Bugolobi",
+        "Ntinda", "Najera", "Bweyogerere", "Kansanga", "Kabalagala"
+      ],
+      entebbe: [
+        "Entebbe Municipal", "Katabi", "Wakiso", "Busiro", "Kyaddondo",
+        "Airport Area", "Victoria Mall", "Kitooro", "Lungujja", "Zana"
+      ],
+      jinja: [
+        "Jinja Municipal", "Jinja North", "Jinja South East", "Butembe", "Kagoma",
+        "Walukuba", "Masese", "Kimaka", "Budondo", "Kakira"
+      ],
+      mbale: [
+        "Mbale Municipal", "Industrial", "Wanale", "Northern", "Nakawa",
+        "Namatala", "Namatembe", "Bungokho", "Manafwa", "Bududa"
+      ],
+
       // Rwanda
-      kigali: ["Nyabugogo Bus Park", "Kacyiru"],
-      butare: ["Butare Bus Station", "Huye"],
-      ruhengeri: ["Ruhengeri Bus Park", "Musanze"],
-      
+      kigali: [
+        "Nyarugenge", "Gasabo", "Kicukiro", "Kimisagara", "Nyamirambo",
+        "Muhima", "Gitega", "Remera", "Kimironko", "Gisozi",
+        "Nyarutarama", "Kabuga", "Masaka", "Niboye", "Gatenga"
+      ],
+      butare: [
+        "Huye", "Tumba", "Matyazo", "Mukura", "Ruhashya",
+        "Ngoma", "Rusatira", "Simbi", "Karama", "Rwaniro"
+      ],
+      ruhengeri: [
+        "Musanze", "Cyuve", "Gacaca", "Gashaki", "Gataraga",
+        "Kimonyi", "Muhoza", "Muko", "Musanze", "Nkotsi"
+      ],
+
       // Burundi
-      bujumbura: ["Bujumbura Central Station", "Rohero"],
-      gitega: ["Gitega Bus Terminal", "Nyamugari"]
+      bujumbura: [
+        "Mukaza", "Ntahangwa", "Rohero", "Buyenzi", "Ngagara",
+        "Kamenge", "Cibitoke", "Musaga", "Kanyosha", "Gatoke",
+        "Bwiza", "Asiatique", "Centre Ville", "Kiriri", "Nyakabiga"
+      ],
+      gitega: [
+        "Gitega", "Nyamugari", "Mushiha", "Makebuko", "Itaba",
+        "Buraza", "Bugendana", "Giheta", "Ryansoro", "Mutaho"
+      ]
+    };
+
+    // Transport mode pricing (base prices in TZS)
+    const transportPricing = {
+      bodaboda: { base: 2000, perKm: 300 },
+      bajaj: { base: 3500, perKm: 400 },
+      cab: { base: 8000, perKm: 800 }
     };
 
     // Get DOM elements
-    const originSelect = document.getElementById('origin');
     const destinationSelect = document.getElementById('destination');
-    const originStationSelect = document.getElementById('origin_station');
-    const destinationStationSelect = document.getElementById('destination_station');
-    const stationSelectionDiv = document.getElementById('stationSelection');
+    const wardSelectionDiv = document.getElementById('wardSelection');
+    const wardSectionTitle = document.getElementById('wardSectionTitle');
+    const wardSectionDescription = document.getElementById('wardSectionDescription');
+    const wardListDiv = document.getElementById('wardList');
+    const selectedWardInput = document.getElementById('selected_ward');
+    const transportModeSelectionDiv = document.getElementById('transportModeSelection');
+    const selectedTransportModeInput = document.getElementById('selected_transport_mode');
+    const priceEstimateDiv = document.getElementById('priceEstimate');
+    const estimatedPriceSpan = document.getElementById('estimatedPrice');
+    const routeInfoSpan = document.getElementById('routeInfo');
+    const searchButton = document.getElementById('searchButton');
+    const originSelect = document.getElementById('origin');
 
-    // Show station selection when cities are selected
-    originSelect.addEventListener('change', updateStations);
-    destinationSelect.addEventListener('change', updateStations);
+    // Show ward selection when destination city is selected
+    destinationSelect.addEventListener('change', updateWards);
 
-    function updateStations() {
-      const originCity = originSelect.value;
+    function updateWards() {
       const destinationCity = destinationSelect.value;
       
-      if (originCity && destinationCity) {
-        // Show station selection
-        stationSelectionDiv.classList.remove('hidden');
+      if (destinationCity && cityWards[destinationCity]) {
+        // Get city name for display
+        const cityName = destinationSelect.options[destinationSelect.selectedIndex].text;
         
-        // Update origin stations
-        originStationSelect.innerHTML = '<option value="" disabled selected>Select station</option>';
-        if (cityStations[originCity]) {
-          cityStations[originCity].forEach(station => {
-            const option = document.createElement('option');
-            option.value = station.toLowerCase().replace(/\s+/g, '_');
-            option.textContent = station;
-            originStationSelect.appendChild(option);
-          });
-        }
+        // Show ward selection
+        wardSelectionDiv.classList.remove('hidden');
         
-        // Update destination stations
-        destinationStationSelect.innerHTML = '<option value="" disabled selected>Select station</option>';
-        if (cityStations[destinationCity]) {
-          cityStations[destinationCity].forEach(station => {
-            const option = document.createElement('option');
-            option.value = station.toLowerCase().replace(/\s+/g, '_');
-            option.textContent = station;
-            destinationStationSelect.appendChild(option);
+        // Update title and description
+        wardSectionTitle.textContent = `Select Ward in ${cityName}`;
+        wardSectionDescription.textContent = `Choose your specific destination ward in ${cityName} for more accurate routing`;
+        
+        // Clear previous wards
+        wardListDiv.innerHTML = '';
+        selectedWardInput.value = '';
+        
+        // Hide transport mode selection and price estimate
+        transportModeSelectionDiv.classList.add('hidden');
+        priceEstimateDiv.classList.add('hidden');
+        selectedTransportModeInput.value = '';
+        
+        // Update search button state
+        updateSearchButtonState();
+        
+        // Add wards as clickable cards
+        cityWards[destinationCity].forEach(ward => {
+          const wardCard = document.createElement('div');
+          wardCard.className = 'bg-white p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 cursor-pointer transition-all duration-200 ward-card';
+          wardCard.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-gray-800">${ward}</span>
+              <svg class="w-5 h-5 text-gray-400 check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+          `;
+          
+          // Add click event to select ward
+          wardCard.addEventListener('click', function() {
+            // Remove selection from other cards
+            document.querySelectorAll('.ward-card').forEach(card => {
+              card.classList.remove('border-blue-500', 'bg-blue-50');
+              card.querySelector('.check-icon').classList.add('hidden');
+            });
+            
+            // Select this card
+            this.classList.add('border-blue-500', 'bg-blue-50');
+            this.querySelector('.check-icon').classList.remove('hidden');
+            this.querySelector('.check-icon').classList.add('text-blue-500');
+            
+            // Set selected ward value
+            selectedWardInput.value = ward.toLowerCase().replace(/\s+/g, '_');
+            
+            // Show transport mode selection
+            showTransportModeSelection();
           });
-        }
+          
+          wardListDiv.appendChild(wardCard);
+        });
       } else {
-        stationSelectionDiv.classList.add('hidden');
+        wardSelectionDiv.classList.add('hidden');
+        transportModeSelectionDiv.classList.add('hidden');
+        priceEstimateDiv.classList.add('hidden');
+        updateSearchButtonState();
       }
     }
+
+    function showTransportModeSelection() {
+      transportModeSelectionDiv.classList.remove('hidden');
+      
+      // Add click events to transport mode cards
+      document.querySelectorAll('.transport-mode-card').forEach(card => {
+        card.addEventListener('click', function() {
+          // Remove selection from other transport mode cards
+          document.querySelectorAll('.transport-mode-card').forEach(c => {
+            c.classList.remove('selected');
+          });
+          
+          // Select this card
+          this.classList.add('selected');
+          
+          // Set selected transport mode value
+          const mode = this.getAttribute('data-mode');
+          selectedTransportModeInput.value = mode;
+          
+          // Show price estimate
+          showPriceEstimate(mode);
+          
+          // Update search button state
+          updateSearchButtonState();
+        });
+      });
+    }
+
+    function showPriceEstimate(transportMode) {
+      const origin = originSelect.value;
+      const destination = destinationSelect.value;
+      const ward = selectedWardInput.value;
+      
+      if (origin && destination && ward && transportMode) {
+        // Simple distance calculation (this would normally come from an API)
+        const estimatedDistance = getEstimatedDistance(origin, destination);
+        const pricing = transportPricing[transportMode];
+        const estimatedPrice = pricing.base + (estimatedDistance * pricing.perKm);
+        
+        // Get city names for display
+        const originName = originSelect.options[originSelect.selectedIndex].text;
+        const destinationName = destinationSelect.options[destinationSelect.selectedIndex].text;
+        
+        // Update price estimate display
+        estimatedPriceSpan.textContent = `TZS ${estimatedPrice.toLocaleString()}`;
+        routeInfoSpan.textContent = `${originName} to ${destinationName} • ~${estimatedDistance}km`;
+        
+        priceEstimateDiv.classList.remove('hidden');
+      }
+    }
+
+    function getEstimatedDistance(origin, destination) {
+      // Simple mock distance calculation
+      // In a real app, this would use a mapping service API
+      const distances = {
+        'dar_es_salaam_arusha': 15,
+        'dar_es_salaam_dodoma': 12,
+        'nairobi_mombasa': 18,
+        'kampala_kigali': 25,
+        'default': 10
+      };
+      
+      const key = `${origin}_${destination}`;
+      return distances[key] || distances[key.split('_').reverse().join('_')] || distances.default;
+    }
+
+    function updateSearchButtonState() {
+      const origin = originSelect.value;
+      const destination = destinationSelect.value;
+      const ward = selectedWardInput.value;
+      const transportMode = selectedTransportModeInput.value;
+      const travelDate = document.getElementById('travel_date').value;
+      
+      if (origin && destination && ward && transportMode && travelDate) {
+        searchButton.disabled = false;
+        searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        searchButton.disabled = true;
+        searchButton.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    // Add event listeners to form fields to update search button state
+    originSelect.addEventListener('change', updateSearchButtonState);
+    document.getElementById('travel_date').addEventListener('change', updateSearchButtonState);
+
+    // Set minimum date to today
+    document.getElementById('travel_date').min = new Date().toISOString().split('T')[0];
   </script>
 
 </body>

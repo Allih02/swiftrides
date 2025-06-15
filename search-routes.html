@@ -102,12 +102,104 @@
           </div>
           <div>
             <label class="block text-sm font-medium text-white mb-2">Date</label>
-            <input type="date" class="w-full p-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-300" value="2025-05-24">
+            <input type="date" name="travel_date" class="w-full p-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-300" value="<?php echo $travel_date; ?>" min="<?php echo date('Y-m-d'); ?>">
           </div>
           <button type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition self-end">
             Update Search
           </button>
         </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ward Selection Section -->
+  <section class="bg-white px-6 py-12 mb-8 shadow-sm">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Select Your Ward</h2>
+        <p class="text-gray-600 text-lg">Choose your destination ward for local transport options</p>
+      </div>
+
+      <!-- Ward Selection Buttons -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <button onclick="selectWard('Kaloleni')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Kaloleni</h3>
+        </button>
+        <button onclick="selectWard('Kati')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Kati</h3>
+        </button>
+        <button onclick="selectWard('Lemara')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Lemara</h3>
+        </button>
+        <button onclick="selectWard('Unga Ltd')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Unga Ltd</h3>
+        </button>
+        <button onclick="selectWard('Sekei')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Sekei</h3>
+        </button>
+        <button onclick="selectWard('Kimandolu')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Kimandolu</h3>
+        </button>
+        <button onclick="selectWard('Ngarenaro')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Ngarenaro</h3>
+        </button>
+        <button onclick="selectWard('Levolosi')" class="ward-btn p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+          <h3 class="text-lg font-semibold text-gray-800">Levolosi</h3>
+        </button>
+      </div>
+
+      <!-- Local Transport Options (Hidden by default) -->
+      <div id="transportOptions" class="hidden">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Select Local Transport for <span id="selectedWardName" class="text-blue-600"></span></h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Hiace Option -->
+          <button onclick="selectTransport('hiace')" class="transport-option w-full flex items-center justify-between p-6 border-2 border-blue-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+            <div class="flex items-center">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-xl font-semibold text-gray-800">Hiace</div>
+                <div class="text-gray-600">Shared Transport</div>
+                <div class="text-sm text-gray-500 mt-1">14 seats available</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-blue-600">TZS 2,000</div>
+              <div class="text-sm text-gray-600">per person</div>
+            </div>
+          </button>
+
+          <!-- Bajaji Option -->
+          <button onclick="selectTransport('bajaji')" class="transport-option w-full flex items-center justify-between p-6 border-2 border-yellow-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-200">
+            <div class="flex items-center">
+              <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <div class="text-xl font-semibold text-gray-800">Bajaji</div>
+                <div class="text-gray-600">Private Transport</div>
+                <div class="text-sm text-gray-500 mt-1">3 seats available</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-yellow-600">TZS 5,000</div>
+              <div class="text-sm text-gray-600">per ride</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Confirm Transport Selection -->
+        <div class="mt-8 text-center">
+          <button onclick="confirmTransportSelection()" id="confirmTransportBtn" class="btn-primary px-8 py-3 rounded-lg text-white" disabled>
+            Confirm Selection
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -288,8 +380,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 35,000</div>
                 <div class="text-sm text-gray-600 mb-4">32 seats available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="SwiftRides Express"
+                        data-departure="06:30"
+                        data-arrival="15:00"
+                        data-price="35000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -350,8 +448,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 55,000</div>
                 <div class="text-sm text-gray-600 mb-4">18 seats available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="Kilimanjaro Express"
+                        data-departure="07:00"
+                        data-arrival="14:45"
+                        data-price="55000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -412,8 +516,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 28,000</div>
                 <div class="text-sm text-gray-600 mb-4">45 seats available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="SwiftRides"
+                        data-departure="08:00"
+                        data-arrival="17:15"
+                        data-price="28000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -431,7 +541,7 @@
                       </svg>
                     </div>
                     <div>
-                      <h3 class="font-semibold text-gray-800">Tanzanian Spirit</h3>
+                      <h3 class="font-semibold text-gray-800">SwiftRides</h3>
                       <p class="text-sm text-gray-600">MAN Lion's Coach • Business Class</p>
                     </div>
                   </div>
@@ -465,7 +575,7 @@
                 <div class="flex flex-wrap gap-2 mb-4">
                   <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">AC</span>
                   <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">WiFi</span>
-                  <span class="bg-purple-100 text-purple-800 text-xs px-2<span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Reclining Seats</span>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Reclining Seats</span>
                   <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Snacks</span>
                 </div>
               </div>
@@ -473,8 +583,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 42,000</div>
                 <div class="text-sm text-gray-600 mb-4">28 seats available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="SwiftRides"
+                        data-departure="09:30"
+                        data-arrival="17:30"
+                        data-price="42000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -536,8 +652,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 25,000</div>
                 <div class="text-sm text-gray-600 mb-4">52 seats available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="Eastland Express"
+                        data-departure="10:00"
+                        data-arrival="20:30"
+                        data-price="25000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -598,8 +720,14 @@
               <div class="md:text-right md:ml-6">
                 <div class="price-highlight text-3xl mb-2">TZS 75,000</div>
                 <div class="text-sm text-gray-600 mb-4">12 beds available</div>
-                <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
-                  Select Seats
+                <button onclick="selectBusAndShowDetails(this)" 
+                        data-arrival-station="Arusha Bus Station"
+                        data-company="Highland Cruiser"
+                        data-departure="11:00"
+                        data-arrival="18:30"
+                        data-price="75000"
+                        class="btn-primary text-white px-6 py-3 rounded-lg font-medium w-full md:w-auto">
+                  Select Bus
                 </button>
               </div>
             </div>
@@ -739,62 +867,352 @@
     </div>
   </footer>
 
+  <!-- Passenger Details and Ward Selection Modal -->
+  <div id="passengerDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white rounded-xl max-w-4xl mx-auto mt-20 p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-gray-800">Complete Your Booking</h3>
+        <button onclick="closePassengerModal()" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Selected Bus Summary -->
+      <div class="bg-blue-50 p-4 rounded-lg mb-6">
+        <h4 class="font-semibold text-gray-800 mb-2">Selected Bus Details</h4>
+        <div id="selectedBusDetails" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div>
+            <span class="text-gray-600">Company:</span>
+            <span id="busCompany" class="block font-medium text-gray-800"></span>
+          </div>
+          <div>
+            <span class="text-gray-600">Departure:</span>
+            <span id="busDeparture" class="block font-medium text-gray-800"></span>
+          </div>
+          <div>
+            <span class="text-gray-600">Arrival:</span>
+            <span id="busArrival" class="block font-medium text-gray-800"></span>
+          </div>
+          <div>
+            <span class="text-gray-600">Price:</span>
+            <span id="busPrice" class="block font-medium text-gray-800"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Passenger Details Form -->
+      <div class="mb-6">
+        <h4 class="font-semibold text-gray-800 mb-4">Primary Passenger Details</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <input type="text" id="passengerName" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter full name">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+            <input type="tel" id="passengerPhone" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter phone number">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <input type="email" id="passengerEmail" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter email address">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">ID Number</label>
+            <input type="text" id="passengerId" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter ID number">
+          </div>
+        </div>
+      </div>
+
+      <!-- Ward Selection Button -->
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-600">
+          <p>Next: Select your destination ward and local transport</p>
+        </div>
+        <div class="space-x-4">
+          <button onclick="closePassengerModal()" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+            Cancel
+          </button>
+          <button onclick="proceedToWardSelection()" 
+                  id="proceedToWardBtn"
+                  class="btn-primary px-6 py-3 rounded-lg text-white">
+            Select Ward & Transport
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ward and Local Transport Selection Section -->
+  <div id="wardSelectionSection" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white rounded-xl max-w-5xl mx-auto mt-20 p-6 max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-gray-800">Select Your Destination Ward</h3>
+        <button onclick="closeWardModal()" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Ward Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <?php if (isset($cityWards[$destination])): ?>
+          <?php foreach ($cityWards[$destination] as $ward): ?>
+            <div class="ward-option bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-blue-500 cursor-pointer transition-all duration-200">
+              <h4 class="text-xl font-semibold text-gray-800 mb-4"><?php echo $ward; ?></h4>
+                      
+                      <!-- Local Transport Options -->
+                      <div class="space-y-4">
+                        <!-- Hiace Option -->
+                        <button onclick="selectLocalTransport(this, '<?php echo $ward; ?>', 'hiace')" 
+                                class="w-full flex items-center justify-between p-4 border-2 border-blue-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all duration-200">
+                          <div class="flex items-center">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                              </svg>
+                            </div>
+                            <div class="text-left">
+                              <div class="font-medium">Hiace</div>
+                              <div class="text-sm text-gray-600">Shared Transport</div>
+                            </div>
+                          </div>
+                          <div class="text-right">
+                            <div class="font-medium text-blue-600">TZS 2,000</div>
+                            <div class="text-sm text-gray-600">14 seats</div>
+                          </div>
+                        </button>
+
+                        <!-- Bajaji Option -->
+                        <button onclick="selectLocalTransport(this, '<?php echo $ward; ?>', 'bajaji')"
+                                class="w-full flex items-center justify-between p-4 border-2 border-yellow-200 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-200">
+                          <div class="flex items-center">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </div>
+                            <div class="text-left">
+                              <div class="font-medium">Bajaji</div>
+                              <div class="text-sm text-gray-600">Private Transport</div>
+                            </div>
+                          </div>
+                          <div class="text-right">
+                            <div class="font-medium text-yellow-600">TZS 5,000</div>
+                            <div class="text-sm text-gray-600">3 seats</div>
+                          </div>
+                        </button>
+                      </div>
+
+                      <!-- Travel Time -->
+                      <div class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-600">
+                        <div class="flex items-center justify-between">
+                          <div>
+                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            15-30 min
+                          </div>
+                          <button onclick="viewOnMap('<?php echo $ward; ?>')" class="text-blue-600 hover:text-blue-800">
+                            View on map
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
+
+              <!-- Selected Transport Summary -->
+              <div id="transportSummary" class="hidden bg-green-50 p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h4 class="font-semibold text-gray-800">Selected Ward & Transport</h4>
+                    <p id="selectedWardTransport" class="text-green-600 mt-1"></p>
+                  </div>
+                  <button onclick="confirmWardAndTransport()" 
+                          class="btn-primary px-6 py-3 rounded-lg text-white">
+                    Confirm Selection
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
   <script>
-    // Filter functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      const sortSelect = document.querySelector('select');
-      
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', filterResults);
-      });
-      
-      sortSelect.addEventListener('change', sortResults);
-      
-      function filterResults() {
-        // Simulate filtering - in real app, this would filter the results
-        console.log('Filtering results...');
-      }
-      
-      function sortResults() {
-        // Simulate sorting - in real app, this would sort the results
-        console.log('Sorting results...');
-      }
-      
-      // Clear filters
-      const clearButton = document.querySelector('button:contains("Clear All Filters")');
-      if (clearButton) {
-        clearButton.addEventListener('click', function() {
-          checkboxes.forEach(checkbox => {
-            checkbox.checked = false;
-          });
-          filterResults();
-        });
-      }
-    });
+            let selectedWard = '';
+            let selectedTransport = '';
+            let selectedBusDetails = {};
 
-    // Animate route cards on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+            function selectWard(element, wardName) {
+              // Remove selection from other cards
+              document.querySelectorAll('.ward-card').forEach(card => {
+                card.classList.remove('border-blue-500', 'bg-blue-50');
+                card.querySelector('.check-icon').classList.add('hidden');
+              });
+              
+              // Select this card
+              element.classList.add('border-blue-500', 'bg-blue-50');
+              element.querySelector('.check-icon').classList.remove('hidden');
+              
+              // Store selected ward
+              selectedWard = wardName;
+              
+              // Show transport modal
+              document.getElementById('selectedWardName').textContent = wardName;
+              document.getElementById('transportModal').classList.remove('hidden');
+            }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
+            function closeTransportModal() {
+              document.getElementById('transportModal').classList.add('hidden');
+              selectedTransport = '';
+              
+              // Reset transport selections
+              document.querySelectorAll('.transport-option').forEach(option => {
+                option.classList.remove('border-blue-500', 'border-yellow-500', 'bg-blue-50', 'bg-yellow-50');
+                option.querySelector('.transport-check').classList.add('hidden');
+              });
+              
+              document.getElementById('confirmTransportBtn').disabled = true;
+              document.getElementById('confirmTransportBtn').classList.add('opacity-50', 'cursor-not-allowed');
+            }
 
-    // Observe route cards
-    document.querySelectorAll('.route-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(30px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(card);
-    });
+            function selectTransport(type) {
+              selectedTransport = type;
+              
+              // Reset all transport options
+              document.querySelectorAll('.transport-option').forEach(option => {
+                option.classList.remove('border-blue-500', 'border-yellow-500', 'bg-blue-50', 'bg-yellow-50');
+                option.querySelector('.transport-check').classList.add('hidden');
+              });
+              
+              // Style selected option
+              const selectedElement = event.currentTarget;
+              if (type === 'hiace') {
+                selectedElement.classList.add('border-blue-500', 'bg-blue-50');
+              } else {
+                selectedElement.classList.add('border-yellow-500', 'bg-yellow-50');
+              }
+              selectedElement.querySelector('.transport-check').classList.remove('hidden');
+              
+              // Enable confirm button
+              document.getElementById('confirmTransportBtn').disabled = false;
+              document.getElementById('confirmTransportBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            function confirmTransportSelection() {
+              // Update summary
+              const wardSummary = document.getElementById('wardSummary');
+              const selectedWardText = document.getElementById('selectedWardText');
+              const selectedTransportText = document.getElementById('selectedTransportText');
+              
+              selectedWardText.textContent = selectedWard;
+              selectedTransportText.textContent = selectedTransport === 'hiace' ? 'Hiace (Shared Transport)' : 'Bajaji (Private Transport)';
+              wardSummary.classList.remove('hidden');
+              
+              // Close modal
+              closeTransportModal();
+              
+              // Enable proceed button
+              document.getElementById('proceedButton').disabled = false;
+              document.getElementById('proceedButton').classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            function selectBusAndShowDetails(button) {
+              // Store bus details
+              selectedBusDetails = {
+                company: button.getAttribute('data-company'),
+                departure: button.getAttribute('data-departure'),
+                arrival: button.getAttribute('data-arrival'),
+                price: button.getAttribute('data-price'),
+                arrivalStation: button.getAttribute('data-arrival-station')
+              };
+
+              // Update modal with bus details
+              document.getElementById('busCompany').textContent = selectedBusDetails.company;
+              document.getElementById('busDeparture').textContent = selectedBusDetails.departure;
+              document.getElementById('busArrival').textContent = selectedBusDetails.arrival;
+              document.getElementById('busPrice').textContent = `TZS ${selectedBusDetails.price}`;
+
+              // Show passenger details modal
+              document.getElementById('passengerDetailsModal').classList.remove('hidden');
+            }
+
+            function closePassengerModal() {
+              document.getElementById('passengerDetailsModal').classList.add('hidden');
+            }
+
+            function proceedToWardSelection() {
+              // Validate passenger details
+              const name = document.getElementById('passengerName').value;
+              const phone = document.getElementById('passengerPhone').value;
+              const email = document.getElementById('passengerEmail').value;
+              const id = document.getElementById('passengerId').value;
+
+              if (!name || !phone || !email || !id) {
+                alert('Please fill in all passenger details');
+                return;
+              }
+
+              // Store passenger details
+              const passengerDetails = {
+                name: name,
+                phone: phone,
+                email: email,
+                id: id
+              };
+
+              // Close passenger modal and show ward selection
+              closePassengerModal();
+              document.getElementById('wardSelectionSection').classList.remove('hidden');
+            }
+
+            function closeWardModal() {
+              document.getElementById('wardSelectionSection').classList.add('hidden');
+            }
+
+            function selectLocalTransport(button, ward, transportType) {
+              // Remove previous selections
+              document.querySelectorAll('.ward-option button').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-blue-500', 'ring-yellow-500');
+              });
+
+              // Highlight selected option
+              if (transportType === 'hiace') {
+                button.classList.add('ring-2', 'ring-blue-500');
+              } else {
+                button.classList.add('ring-2', 'ring-yellow-500');
+              }
+
+              // Update summary
+              const transportText = transportType === 'hiace' ? 'Hiace (Shared Transport)' : 'Bajaji (Private Transport)';
+              document.getElementById('selectedWardTransport').textContent = `${ward} - ${transportText}`;
+              document.getElementById('transportSummary').classList.remove('hidden');
+
+              // Store selection
+              selectedWard = ward;
+              selectedTransport = transportType;
+            }
+
+            function viewOnMap(ward) {
+              // Implement map view functionality
+              alert(`Opening map view for ${ward}`);
+            }
+
+            function confirmWardAndTransport() {
+              if (!selectedWard || !selectedTransport) {
+                alert('Please select a ward and transport option');
+                return;
+              }
+
+              // Close ward selection modal
+              closeWardModal();
+
+              // Proceed to next step (e.g., payment or confirmation)
+              alert('Proceeding to payment...');
+            }
   </script>
 
 </body>
